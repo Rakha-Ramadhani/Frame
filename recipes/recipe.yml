@@ -1,3 +1,4 @@
+---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 name: frame-silverblue
 description: Personal Fedora Silverblue image optimized for Ryzen 7 8845HS with Bazzite audio, power saving, and devtools.
@@ -14,37 +15,68 @@ modules:
 
   - type: dnf
     repos:
-      - https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
-    keys:
-      - https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+      files:
+        - https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+      keys:
+        - https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
     install:
-      - brave-browser
-      - gnome-tweaks
-      - extension-manager
-      - wine
-      - winetricks
-      - powertop
+      packages:
+        - brave-browser
+        - gnome-tweaks
+        - extension-manager
+        - wine
+        - winetricks
+        - powertop
+        - gnome-clocks
+        - nextcloud-client
+        - nextcloud-client-nautilus
+        - xournal
+        - tilix
+        - tilix-nautilus
+        - hplip
+        - sane-backends-drivers-scanners
+        - simple-scan
+        - hidapi
+        - libvirt
+        - qemu-kvm
+        - solaar
     remove:
       packages:
-        # example: removing firefox (in favor of the flatpak)
-        # "firefox" is the main package, "firefox-langpacks" is a dependency
         - firefox
-        - firefox-langpacks 
+        - firefox-langpacks
 
   - type: brew
     nofile-limits: true
     brew-analytics: false
 
   - type: default-flatpaks
-    notify: true
-    user:
-      install:
-        - com.mattjakeman.ExtensionManager
-        - it.mijorus.gearlever
-        - com.ranfdev.DistroShelf
-        - io.missioncenter.MissionCenter
-      remove:
-        - org.mozilla.firefox
+    configurations:
+      - notify: true
+        scope: user
+        install:
+          - com.mattjakeman.ExtensionManager
+          - it.mijorus.gearlever
+          - com.ranfdev.DistroShelf
+          - io.missioncenter.MissionCenter
+          - com.github.iwalton3.jellyfin-media-player
+          - com.google.Chrome
+          - com.visualstudio.code
+          - dev.zed.Zed
+          - org.gnome.Calculator
+          - org.gnome.Evince
+          - org.gnome.Loupe
+          - org.gnome.Snapshot
+          - org.gnome.TextEditor
+          - org.libreoffice.LibreOffice
+          - org.mozilla.firefox
+          - org.videolan.VLC
+          - rest.insomnia.Insomnia
+
+      - notify: true
+        scope: system
+        install:
+          - org.gnome.Loupe
+          - org.mozilla.firefox
 
   - type: systemd
     system:
@@ -56,3 +88,5 @@ modules:
     snippets:
       - echo "Configuring system defaults..."
       - systemctl enable podman.socket
+
+  - type: signing
