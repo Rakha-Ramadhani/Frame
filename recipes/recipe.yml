@@ -10,7 +10,10 @@ modules:
     files:
       - usr: /usr
       - etc: /etc
-
+  - type: justfiles
+    include:
+      - https://raw.githubusercontent.com/ublue-os/bazzite/main/system_files/desktop/shared/usr/share/ublue-os/just/60-bazzite.just
+      - https://raw.githubusercontent.com/ublue-os/bluefin/main/system_files/shared/usr/share/ublue-os/just/60-bluefin.just
   - type: rpm-ostree
     repos:
       # Brave Browser Repo
