@@ -1,45 +1,90 @@
----
-# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-# image will be published to ghcr.io/<user>/<name>
-name: template
-# description will be included in the image's metadata
-description: This is my personal OS image.
-
-# the base image to build on top of (FROM) and the version tag to use
+# BlueBuild Recipe for Fedora Silverblue (AMD Zen 4 Optimized)
+name: custom-silverblue-amd
+description: Fedora Silverblue with Bazzite audio tweaks, AMD Ryzen 7 8845HS power tuning, and preinstalled dev tools.
 base-image: ghcr.io/ublue-os/silverblue-main
-image-version: latest # You can pin to a specific version of Fedora as well
+image-version: latest
 
-# module configuration, executed in order
-# you can include multiple instances of the same module
 modules:
   - type: files
     files:
-      - source: system
-        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+      - usr: /usr
+      - etc: /etc
 
-  - type: dnf
+  - type: rpm-ostree
     repos:
-      copr:
-        - atim/starship
+      # Brave Browser Official Repository
+      - https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
     install:
-      packages:
-        - micro
-        - starship
-    remove:
-      packages:
-        # example: removing firefox (in favor of the flatpak)
-        # "firefox" is the main package, "firefox-langpacks" is a dependency
-        - firefox
-        - firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+      # GUI & Management Tools
+      - gnome-tweaks
+      - gnome-shell-extension-manager
+      - brave-browser
 
-  - type: default-flatpaks
-    configurations:
-      - notify: true # Send notification after install/uninstall is finished (true/false)
-        scope: system
-        # If no repo information is specified, Flathub will be used by default
-        install: # system flatpaks we want all users to have and not remove
-          - org.mozilla.firefox
-          - org.gnome.Loupe
-      - scope: user # Also add Flathub user repo, but no user packages
+      # Container & Developer Tools
+      - distrobox
+      - podman-docker   # Emulates docker CLI via Podman to prevent daemon conflicts
+      - wine
+      - winetricks
 
-  - type: signing # this sets up the proper policy & signing files for signed images to work fully
+      # AMD Codecs & GPU Acceleration (Mesa Driver Stack)
+      - ffmpeg
+      - gstreamer1-plugins-bad-freeworld
+      - gstreamer1-plugins-ugly
+      - mesa-va-drivers
+      - mesa-vdpau-drivers
+      - libva-utils
+      - vulkan-tools
+      - radeontop
+
+      # System & Audio Components
+      - pipewire-plugin-libspa-ffmpeg
+      - wireplumber
+      - power-profiles-daemon
+
+  # Homebrew / Linuxbrew integration
+  - type: brew
+    auto-update: true
+    auto-upgrade: true
+
+  # Kernel parameters optimized for AMD Ryzen 7 8845HS (Zen 4) & Radeon 780M
+  - type: kargs
+    append:
+      - amd_pstate=active             # Enable EPP (Energy Performance Preference) mode
+      - amdgpu.ppfeaturemask=0xffffffff # Unlock full power management capabilities for Radeon 780M
+      - pcie_aspm=force                # Enforce Active State Power Management on PCIe links
+
+  # Post-install configuration scripts
+  - type: script
+    snippets:
+      - |
+        #!/usr/bin/bash
+        set -e
+
+        # -------------------------------------------------------------
+        # 1. Bazzite-style PipeWire Sound Optimization
+        # -------------------------------------------------------------
+        mkdir -p /etc/pipewire/pipewire.conf.d
+        cat << 'EOF' > /etc/pipewire/pipewire.conf.d/99-bazzite-audio.conf
+        # Low-latency high-quality PipeWire defaults inspired by Bazzite OS
+        context.properties = {
+            default.clock.rate          = 48000
+            default.clock.allowed-rates = [ 44100, 48000, 88200, 96000 ]
+            default.clock.quantum       = 1024
+            default.clock.min-quantum   = 32
+            default.clock.max-quantum   = 2048
+        }
+        EOF
+
+        # -------------------------------------------------------------
+        # 2. Audio & Wireless Hardware Power Savings
+        # -------------------------------------------------------------
+        mkdir -p /etc/modprobe.d
+        
+        # Enable HDA Intel audio power saving (suspends audio chip when idle)
+        echo "options snd_hda_intel power_save=1 power_save_controller=Y" > /etc/modprobe.d/audio_powersave.conf
+
+        # -------------------------------------------------------------
+        # 3. Enable Service Support
+        # -------------------------------------------------------------
+        systemctl enable power-profiles-daemon.service
+        systemctl enable podman.socket
