@@ -39,17 +39,14 @@ modules:
 
   - type: default-flatpaks
     notify: true
-    scope: user
-    install:
-      # UI Utilities & Container Management
-      - com.mattjakeman.ExtensionManager
-      - it.mijorus.gearlever           # AppImage Manager
-      - com.ranfdev.DistroShelf         # Distrobox GUI Manager
-      # Primary System Monitor
-      - io.missioncenter.MissionCenter  # GPU/CPU/Memory Monitoring
-    remove:
-      # Ensure Firefox Flatpak is omitted
-      - org.mozilla.firefox
+    user:
+      install:
+        - com.mattjakeman.ExtensionManager
+        - it.mijorus.gearlever
+        - com.ranfdev.DistroShelf
+        - io.missioncenter.MissionCenter
+      remove:
+        - org.mozilla.firefox
 
   - type: systemd
     system:
