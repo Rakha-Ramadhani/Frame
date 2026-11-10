@@ -31,8 +31,6 @@ modules:
         - qemu-kvm
         - swtpm
         - virt-manager
-        - google-carlito-fonts
-        - google-caladea-fonts
     remove:
       packages:
         - firefox
