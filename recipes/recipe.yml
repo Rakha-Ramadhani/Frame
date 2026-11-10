@@ -19,7 +19,6 @@ modules:
     install:
       packages:
         - brave-browser
-        - gnome-clocks
         - gnome-tweaks
         - wine
         - winetricks
