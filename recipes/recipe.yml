@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-name: frame-silverblue
+name: osmatrix
 description: Personal Fedora Silverblue image optimized for laptop with power saving and devtools.
 base-image: ghcr.io/ublue-os/silverblue-main
 image-version: latest
