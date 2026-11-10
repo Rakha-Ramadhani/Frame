@@ -3,7 +3,7 @@
 name: frame-silverblue
 description: Personal Fedora Silverblue image optimized for Ryzen 7 8845HS with Bazzite audio, power saving, and devtools.
 base-image: ghcr.io/ublue-os/silverblue-main
-image-version: latest
+image-version: 45
 
 modules:
   - type: files
