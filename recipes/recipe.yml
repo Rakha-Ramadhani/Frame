@@ -20,8 +20,7 @@ modules:
     install:
       - brave-browser
       - gnome-tweaks
-      - gnome-shell-extension-installer
-      - gnome-shell-extension-appindicator
+      - gnome-shell-extension-manager
       - wine
       - winetricks
       - lutris
