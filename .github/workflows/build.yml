@@ -25,4 +25,4 @@ jobs:
           recipe: recipes/recipe.yml
           registry_token: ${{ secrets.GITHUB_TOKEN }}
           pr_event_number: ${{ github.event.number }}
-          cosign: false
+          cosign_private_key: ${{ secrets.COSIGN_PRIVATE_KEY }}
