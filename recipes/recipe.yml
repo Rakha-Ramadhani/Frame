@@ -12,7 +12,7 @@ modules:
       - source: system/etc
         destination: /etc
 
-  - type: rpm-ostree
+  - type: dnf
     repos:
       - https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
     keys:
@@ -24,6 +24,12 @@ modules:
       - wine
       - winetricks
       - powertop
+    remove:
+      packages:
+        # example: removing firefox (in favor of the flatpak)
+        # "firefox" is the main package, "firefox-langpacks" is a dependency
+        - firefox
+        - firefox-langpacks 
 
   - type: brew
     nofile-limits: true
