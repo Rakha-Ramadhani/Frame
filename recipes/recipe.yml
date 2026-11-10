@@ -1,6 +1,6 @@
 # recipes/recipe.yml
 $schema: https://blue-build.org/schema/v1/recipe.json
-name: smuty-silverblue-ryzen
+name: buddy-silverblue-ryzen
 description: Personal Fedora Silverblue image optimized for Ryzen 7 8845HS with Bazzite audio, power saving, and devtools.
 base-image: ghcr.io/ublue-os/silverblue-main
 image-version: latest # Or set to your desired Fedora version (e.g., 41/42/latest)
