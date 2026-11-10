@@ -31,15 +31,8 @@ modules:
         - nextcloud-client
         - nextcloud-client-nautilus
         - xournal
-        - tilix
-        - tilix-nautilus
-        - hplip
-        - sane-backends-drivers-scanners
-        - simple-scan
-        - hidapi
         - libvirt
         - qemu-kvm
-        - solaar
     remove:
       packages:
         - firefox
@@ -54,29 +47,11 @@ modules:
       - notify: true
         scope: user
         install:
-          - com.mattjakeman.ExtensionManager
           - it.mijorus.gearlever
           - com.ranfdev.DistroShelf
           - io.missioncenter.MissionCenter
-          - com.github.iwalton3.jellyfin-media-player
-          - com.google.Chrome
           - com.visualstudio.code
-          - dev.zed.Zed
-          - org.gnome.Calculator
-          - org.gnome.Evince
-          - org.gnome.Loupe
-          - org.gnome.Snapshot
-          - org.gnome.TextEditor
           - org.libreoffice.LibreOffice
-          - org.mozilla.firefox
-          - org.videolan.VLC
-          - rest.insomnia.Insomnia
-
-      - notify: true
-        scope: system
-        install:
-          - org.gnome.Loupe
-          - org.mozilla.firefox
 
   - type: systemd
     system:
