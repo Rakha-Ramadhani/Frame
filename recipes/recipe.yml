@@ -23,7 +23,6 @@ modules:
       packages:
         - brave-browser
         - gnome-tweaks
-        - extension-manager
         - wine
         - winetricks
         - powertop
@@ -52,6 +51,7 @@ modules:
           - io.missioncenter.MissionCenter
           - com.visualstudio.code
           - org.libreoffice.LibreOffice
+          - com.mattjakeman.ExtensionManager
 
   - type: systemd
     system:
