@@ -13,15 +13,18 @@ modules:
   - type: dnf
     repos:
       files:
-        - https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+        - https://brave.com
       keys:
-        - https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+        - https://brave.com
     install:
       packages:
         - brave-browser
         - gnome-tweaks
         - wine
         - winetricks
+        - cabextract
+        - unzip
+        - wget
         - powertop
         - tuned
         - tuned-ppd
