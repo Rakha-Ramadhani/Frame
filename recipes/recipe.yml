@@ -58,7 +58,6 @@ modules:
   - type: systemd
     system:
       enabled:
-        - power-profiles-daemon.service
         - podman.socket
 
   - type: script
