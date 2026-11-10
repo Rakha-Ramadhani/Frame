@@ -27,7 +27,6 @@ modules:
         - wine
         - winetricks
         - powertop
-        - gnome-clocks
         - libvirt
         - qemu-kvm
     remove:
