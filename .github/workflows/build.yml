@@ -1,7 +1,8 @@
 name: Build Custom Image
+
 on:
   schedule:
-    - cron: '0 0 * * 0' # Build weekly on Sunday at midnight
+    - cron: '0 0 * * 0'
   push:
     branches:
       - main
@@ -15,18 +16,25 @@ jobs:
       contents: read
       packages: write
       id-token: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-            - name: Download upstream justfiles
+
+      - name: Prepare upstream justfiles
+        shell: bash
         run: |
+          set -euo pipefail
           mkdir -p files/justfiles
-          curl --fail --location --silent --show-error \
+
+          curl -fsSL \
             https://raw.githubusercontent.com/ublue-os/bazzite/main/system_files/desktop/shared/usr/share/ublue-os/just/60-bazzite.just \
             -o files/justfiles/60-bazzite.just
-          curl --fail --location --silent --show-error \
+
+          curl -fsSL \
             https://raw.githubusercontent.com/ublue-os/bluefin/main/system_files/shared/usr/share/ublue-os/just/60-bluefin.just \
             -o files/justfiles/60-bluefin.just
+
       - name: Build Custom Image
         uses: blue-build/github-action@v1
         with:
