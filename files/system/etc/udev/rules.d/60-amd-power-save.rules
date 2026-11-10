@@ -1,0 +1,5 @@
+# Enable PCIe ASPM and Power Management for PCI devices on battery
+ACTION=="add", SUBSYSTEM=="pci", ATTR{power/control}="auto"
+
+# Enable audio controller power save timeout (2 seconds)
+ACTION=="add", SUBSYSTEM=="module", KEKY=="snd_hda_intel", ATTR{parameters/power_save}="2"
