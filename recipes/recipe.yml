@@ -5,16 +5,18 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: latest
 
 modules:
-   - type: files
+  - type: files
     files:
       - source: system/usr
         destination: /usr
       - source: system/etc
         destination: /etc
+
   - type: justfiles
     include:
       - https://raw.githubusercontent.com/ublue-os/bazzite/main/system_files/desktop/shared/usr/share/ublue-os/just/60-bazzite.just
       - https://raw.githubusercontent.com/ublue-os/bluefin/main/system_files/shared/usr/share/ublue-os/just/60-bluefin.just
+
   - type: rpm-ostree
     repos:
       # Brave Browser Repo
