@@ -14,27 +14,23 @@ modules:
 
   - type: justfiles
     include:
-      - https://raw.githubusercontent.com/ublue-os/bazzite/main/system_files/desktop/shared/usr/share/ublue-os/just/60-bazzite.just
-      - https://raw.githubusercontent.com/ublue-os/bluefin/main/system_files/shared/usr/share/ublue-os/just/60-bluefin.just
+      - 60-frame.just
+      - 60-bazzite.just
+      - 60-bluefin.just
 
   - type: rpm-ostree
     repos:
-      # Brave Browser Repo
       - https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
     keys:
       - https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
     install:
-      # Primary Web Browser
       - brave-browser
-      # GNOME Customization Tools
       - gnome-tweaks
       - gnome-shell-extension-installer
       - gnome-shell-extension-appindicator
-      # Windows Compatibility & Wine Tools
       - wine
       - winetricks
       - lutris
-      # Battery Monitoring Tool
       - powertop
 
   - type: brew
