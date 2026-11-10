@@ -5,10 +5,12 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: latest
 
 modules:
-  - type: files
+   - type: files
     files:
-      - usr: /usr
-      - etc: /etc
+      - source: system/usr
+        destination: /usr
+      - source: system/etc
+        destination: /etc
   - type: justfiles
     include:
       - https://raw.githubusercontent.com/ublue-os/bazzite/main/system_files/desktop/shared/usr/share/ublue-os/just/60-bazzite.just
