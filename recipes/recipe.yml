@@ -12,12 +12,6 @@ modules:
       - source: system/etc
         destination: /etc
 
-  - type: justfiles
-    include:
-      - 60-frame.just
-      - 60-bazzite.just
-      - 60-bluefin.just
-
   - type: rpm-ostree
     repos:
       - https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
