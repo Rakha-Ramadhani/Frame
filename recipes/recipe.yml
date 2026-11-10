@@ -20,10 +20,9 @@ modules:
     install:
       - brave-browser
       - gnome-tweaks
-      - gnome-shell-extension-manager
+      - extension-manager
       - wine
       - winetricks
-      - lutris
       - powertop
 
   - type: brew
