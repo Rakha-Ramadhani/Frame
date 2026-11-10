@@ -1,7 +1,6 @@
----
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 name: frame-silverblue
-description: Personal Fedora Silverblue image optimized for laptop with Bazzite audio, power saving, and devtools.
+description: Personal Fedora Silverblue image optimized for laptop with power saving and devtools.
 base-image: ghcr.io/ublue-os/silverblue-main
 image-version: latest
 
@@ -10,8 +9,6 @@ modules:
     files:
       - source: system/usr
         destination: /usr
-      - source: system/etc
-        destination: /etc
 
   - type: dnf
     repos:
@@ -27,15 +24,20 @@ modules:
         - wine
         - winetricks
         - powertop
-        - libvirt
-        - qemu-kvm
+        - tuned
+        - tuned-ppd
+        - lm_sensors
         - libvirt-daemon-kvm
+        - qemu-kvm
         - swtpm
         - virt-manager
+        - google-carlito-fonts
+        - google-caladea-fonts
     remove:
       packages:
         - firefox
         - firefox-langpacks
+        - power-profiles-daemon
 
   - type: brew
     nofile-limits: true
@@ -57,6 +59,9 @@ modules:
 
   - type: systemd
     system:
+      enabled:
+        - tuned.service
+    user:
       enabled:
         - podman.socket
 
