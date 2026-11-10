@@ -1,5 +1,4 @@
-# recipes/recipe.yml
-$schema: https://blue-build.org/schema/v1/recipe.json
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 name: frame-silverblue
 description: Personal Fedora Silverblue image optimized for Ryzen 7 8845HS with Bazzite audio, power saving, and devtools.
 base-image: ghcr.io/ublue-os/silverblue-main
