@@ -21,20 +21,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare upstream justfiles
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p files/justfiles
-
-          curl -fsSL \
-            https://raw.githubusercontent.com/ublue-os/bazzite/main/system_files/desktop/shared/usr/share/ublue-os/just/60-bazzite.just \
-            -o files/justfiles/60-bazzite.just
-
-          curl -fsSL \
-            https://raw.githubusercontent.com/ublue-os/bluefin/main/system_files/shared/usr/share/ublue-os/just/60-bluefin.just \
-            -o files/justfiles/60-bluefin.just
-
       - name: Build Custom Image
         uses: blue-build/github-action@v1
         with:
