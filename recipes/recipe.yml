@@ -49,6 +49,7 @@ modules:
           - com.visualstudio.code
           - org.libreoffice.LibreOffice
           - com.mattjakeman.ExtensionManager
+          - org.virt_manager.virt-manager
 
   - type: systemd
     system:
