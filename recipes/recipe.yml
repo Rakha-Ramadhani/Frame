@@ -29,6 +29,9 @@ modules:
         - powertop
         - libvirt
         - qemu-kvm
+        - libvirt-daemon-kvm
+        - swtpm
+        - virt-manager
     remove:
       packages:
         - firefox
@@ -49,16 +52,12 @@ modules:
           - com.visualstudio.code
           - org.libreoffice.LibreOffice
           - com.mattjakeman.ExtensionManager
-          - org.virt_manager.virt-manager
+          - com.github.tchx84.Flatseal
+          - com.usebottles.bottles
 
   - type: systemd
     system:
       enabled:
         - podman.socket
-
-  - type: script
-    snippets:
-      - echo "Configuring system defaults..."
-      - systemctl enable podman.socket
 
   - type: signing
