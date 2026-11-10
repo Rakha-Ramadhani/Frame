@@ -3,7 +3,7 @@ $schema: https://blue-build.org/schema/v1/recipe.json
 name: buddy-silverblue-ryzen
 description: Personal Fedora Silverblue image optimized for Ryzen 7 8845HS with Bazzite audio, power saving, and devtools.
 base-image: ghcr.io/ublue-os/silverblue-main
-image-version: latest # Or set to your desired Fedora version (e.g., 41/42/latest)
+image-version: latest
 
 modules:
   - type: files
@@ -15,36 +15,20 @@ modules:
     repos:
       # Brave Browser Repo
       - https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
-      # RPM Fusion Free & Nonfree (For complete multimedia codecs and hardware acceleration)
-      - https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-%OS_VERSION%.noarch.rpm
-      - https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-%OS_VERSION%.noarch.rpm
     keys:
       - https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
     install:
-      # Web Browser
+      # Primary Web Browser
       - brave-browser
       # GNOME Customization Tools
       - gnome-tweaks
       - gnome-shell-extension-installer
       - gnome-shell-extension-appindicator
-      # Development & Containers
-      - podman
-      - podman-docker
-      - distrobox
-      # Gaming / Windows Compatibility & Wine Tools
+      # Windows Compatibility & Wine Tools
       - wine
       - winetricks
       - lutris
-      # Complete Multimedia Codecs & HW Acceleration (AMD Radeon Graphics 780M)
-      - ffmpeg
-      - gstreamer1-plugins-bad-freeworld
-      - gstreamer1-plugins-ugly
-      - gstreamer1-vaapi
-      - mesa-va-drivers-freeworld
-      - mesa-vdpau-drivers-freeworld
-      - libva-utils
-      # Power Management Optimization (Conflict-Free native tools)
-      - power-profiles-daemon
+      # Battery Monitoring Tool
       - powertop
 
   - type: brew
@@ -55,7 +39,15 @@ modules:
     notify: true
     scope: user
     install:
-      - com.mattjakeman.ExtensionManager # GNOME Extension Manager GUI
+      # UI Utilities & Container Management
+      - com.mattjakeman.ExtensionManager
+      - it.mijorus.gearlever           # AppImage Manager
+      - com.ranfdev.DistroShelf         # Distrobox GUI Manager
+      # Primary System Monitor
+      - io.missioncenter.MissionCenter  # GPU/CPU/Memory Monitoring
+    remove:
+      # Ensure Firefox Flatpak is omitted
+      - org.mozilla.firefox
 
   - type: systemd
     system:
@@ -66,5 +58,4 @@ modules:
   - type: script
     snippets:
       - echo "Configuring system defaults..."
-      # Ensure container CLI compatibility
       - systemctl enable podman.socket
